@@ -1,8 +1,16 @@
-import Vue from "vue";
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-export const state = () => ({
-})
-export const mutations = {
-}
+Vue.use(Vuex)
 
+const store = () =>
+  new Vuex.Store({
+    state: {
+    },
+    mutations: {
+      
+    }
+  })
+
+export default store
 
