@@ -1,0 +1,15 @@
+@mixin font-face($font-family, $file-path, $weight: normal, $style: normal) {
+    @font-face {
+      font-family: $font-family;
+      src: url('#{$file-path}.otf');
+      // src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'), url('#{$file-path}.woff') format('woff'), url('#{$file-path}.ttf') format('truetype');
+      font-weight: $weight;
+      font-style: $style;
+      font-display: swap;
+    }
+  }
+  
+  @include font-face("apercu pro", "../fonts/Apercu pro/ApercuPro-Light", 300);
+  @include font-face("apercu pro", "../fonts/Apercu pro/ApercuPro-Regular", 400);
+  @include font-face("apercu pro", "../fonts/Apercu pro/ApercuPro-Medium", 500);
+  

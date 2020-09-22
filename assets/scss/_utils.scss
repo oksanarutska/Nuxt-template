@@ -1,0 +1,148 @@
+// This is just an example. You can use other names and styles !
+
+//colors
+$white-cl: #ffffff;
+$black-cl: #000000;
+
+//fonts
+$font-family: "apercu pro";
+$font-weight: 400;
+$font-size: 16px;
+$line-height: 1.4;
+
+// Example of using variables :
+
+@mixin text {
+    font-family: $font-family;
+    font-weight: $font-weight;
+    font-size: $font-size;
+    line-height: $line-height;
+    color: $black-cl;
+}
+
+//  Example of using vw. For example, if you have a width: 40px, you can use - width: vw (40px), 
+//  but be sure to change $layout-width variable to be same as in your design.
+//  Use it only for a screen > 1200 pixels if needed (Optional):
+
+// < px to vw
+$layout-width: 1440;
+
+@function vw($px) {
+    $vw-context: ($layout-width * 0.01) * 1px;
+    @return ($px/$vw-context) * 1vw;
+}
+
+// Example: you need to subtract px from the percentage, and get the result in vw
+// Usage - percent-m-vw(100%, 20px)
+
+//percent minus vw
+@function percent-m-vw($percent, $px) {
+    $vw-context: ($layout-width * 0.01) * 1px;
+    @return unquote(("calc(" + $percent + " - "+ ($px/$vw-context) * 1vw +")"));
+}
+
+//percent plus vw
+@function percent-p-vw($percent, $px) {
+    $vw-context: ($layout-width * 0.01) * 1px;
+    @return unquote(("calc(" + $percent + " + "+ ($px/$vw-context) * 1vw +")"));
+}
+
+// px to vw />
+
+
+// < adaptive
+// $breakpoints: (xs: 375, sm: 414, md: 768, lg: 1024);
+$breakpoints: (
+    xs: 400,
+    sm: 600,
+    md: 900,
+    lg: 1200,
+);
+
+@mixin max($size) {
+    @if map-has-key($breakpoints, $size) {
+        @media (max-width: #{map-get($breakpoints, $size)}px) {
+            @content;
+        }
+    } @else {
+        @media (max-width: #{$size}px) {
+            @content;
+        }
+    }
+}
+
+@mixin min($size) {
+    @if map-has-key($breakpoints, $size) {
+        @media (min-width: #{map-get($breakpoints, $size)}px) {
+            @content;
+        }
+    } @else {
+        @media (min-width: #{$size}px) {
+            @content;
+        }
+    }
+}
+
+/*
+
+*** example usage ***
+
+body {
+  font-size: 16px;
+  @include max(1200) {
+    font-size: 14px;
+  }
+  or use variable
+  @include max(lg) {
+    font-size: 14px;
+  }
+
+  @include min(1200) {
+    font-size: 14px;
+  }
+  or use variable
+  @include min(lg) {
+    font-size: 14px;
+  }
+}
+*/
+
+// adaptive />
+
+// indents - if you have many of the same indents, you can extract them as mixin
+//md - margin-bottom, mt - margin-top, ml - margin-left, mr - margin-right
+
+@mixin mb-152 {
+    margin-bottom: vw(152px);
+
+    @include max(lg) {
+        margin-bottom: 132px;
+    }
+    @include max(md) {
+        margin-bottom: 124px;
+    }
+    @include max(sm) {
+        margin-bottom: 96px;
+    }
+    @include max(xs) {
+        margin-bottom: 88px;
+    }
+}
+
+@mixin mt-152 {
+    margin-top: vw(152px);
+
+    @include max(lg) {
+        margin-top: 132px;
+    }
+    @include max(md) {
+        margin-top: 124px;
+    }
+    @include max(sm) {
+        margin-top: 96px;
+    }
+    @include max(xs) {
+        margin-top: 88px;
+    }
+}
+
